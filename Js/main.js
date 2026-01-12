@@ -4,57 +4,44 @@ import { saveMessageToFirebase } from './firebase-config.js';
 const projects = [
     {
         id: 1,
-        title: "FinTrack Mobile Banking",
-        category: "app",
-        image: "https://placehold.co/600x400/1a1a2e/FFF?text=FinTrack",
-        client: "FinTech Corp",
-        stack: "Flutter, Firebase, Node.js",
-        description: "A secure and intuitive mobile banking application allowing users to track expenses and manage investments."
+        title: "Pharma Inventory System",
+        category: "web",
+        type: "real", // This is your REAL project
+        url: "https://pharma-inventory-theta.vercel.app/", 
+        image: "https://placehold.co/600x400/103a2e/FFF?text=Pharma+System", // You can replace this with a screenshot later
+        client: "Local Pharmacy",
+        stack: "React, Firebase",
+        description: "A complete inventory management solution for pharmacies to track medicine stock, sales, and expiry dates."
     },
     {
         id: 2,
-        title: "Urban Eat Delivery",
-        category: "web",
-        image: "https://placehold.co/600x400/1a1a2e/FFF?text=Urban+Eat",
-        client: "Urban Eat Ltd",
-        stack: "Next.js, Tailwind CSS, Stripe",
-        description: "High-conversion landing page and ordering system for a metropolitan food delivery network."
+        title: "FinTrack Mobile Banking",
+        category: "app",
+        type: "dummy",
+        image: "https://placehold.co/600x400/1a1a2e/FFF?text=FinTrack",
+        client: "FinTech Corp",
+        stack: "Flutter, Firebase, Node.js",
+        description: "A secure mobile banking app for tracking expenses and investments."
     },
     {
         id: 3,
-        title: "Neon Analytics",
-        category: "marketing",
-        image: "https://placehold.co/600x400/1a1a2e/FFF?text=Neon+Analytics",
-        client: "DataView Inc",
-        stack: "Google Analytics 4, Tableau",
-        description: "Comprehensive data dashboard design and marketing strategy for a SaaS analytics firm."
+        title: "Urban Eat Delivery",
+        category: "web",
+        type: "dummy",
+        image: "https://placehold.co/600x400/1a1a2e/FFF?text=Urban+Eat",
+        client: "Urban Eat Ltd",
+        stack: "Next.js, Tailwind CSS",
+        description: "Food delivery platform with real-time order tracking."
     },
     {
         id: 4,
-        title: "TravelMate Explorer",
-        category: "app",
-        image: "https://placehold.co/600x400/1a1a2e/FFF?text=TravelMate",
-        client: "Global Travels",
-        stack: "React Native, Google Maps API",
-        description: "An adventurous travel companion app that helps users find hidden gems in 50+ countries."
-    },
-    {
-        id: 5,
-        title: "EcoMarket Store",
+        title: "Neon Analytics",
         category: "web",
-        image: "https://placehold.co/600x400/1a1a2e/FFF?text=EcoMarket",
-        client: "Green Earth",
-        stack: "Shopify, Liquid, Vue.js",
-        description: "A sustainable e-commerce platform focused on carbon-neutral shipping and green products."
-    },
-    {
-        id: 6,
-        title: "HealthCore Portal",
-        category: "web",
-        image: "https://placehold.co/600x400/1a1a2e/FFF?text=HealthCore",
-        client: "MediCare Plus",
-        stack: "React, Python Django",
-        description: "Patient management portal designed for healthcare professionals to streamline appointments."
+        type: "dummy",
+        image: "https://placehold.co/600x400/1a1a2e/FFF?text=Neon+Analytics",
+        client: "DataView Inc",
+        stack: "React, D3.js",
+        description: "Marketing analytics dashboard for SaaS companies."
     }
 ];
 
@@ -71,10 +58,19 @@ function renderProjects(filter = 'all') {
     filtered.forEach(project => {
         const card = document.createElement('div');
         card.className = 'project-card';
+        
+        // Logic: If real, link to website. If dummy, open modal.
+        let buttonHtml = '';
+        if(project.type === 'real') {
+            buttonHtml = `<a href="${project.url}" target="_blank" class="btn btn-primary btn-sm">Visit Website</a>`;
+        } else {
+            buttonHtml = `<button class="btn btn-outline btn-sm view-details" data-id="${project.id}">View Details</button>`;
+        }
+
         card.innerHTML = `
             <div class="project-img" style="background-image: url('${project.image}');">
                 <div class="overlay">
-                    <button class="btn btn-primary btn-sm view-details" data-id="${project.id}">View Details</button>
+                    ${buttonHtml}
                 </div>
             </div>
             <div class="project-info">
@@ -85,7 +81,7 @@ function renderProjects(filter = 'all') {
         portfolioGrid.appendChild(card);
     });
 
-    // Re-attach listeners to new buttons
+    // Re-attach listeners ONLY to "View Details" buttons (Dummy projects)
     document.querySelectorAll('.view-details').forEach(btn => {
         btn.addEventListener('click', (e) => openModal(e.target.dataset.id));
     });
@@ -99,16 +95,13 @@ const filterBtns = document.querySelectorAll('.filter-btn');
 
 filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-        // Remove active class from all
         filterBtns.forEach(b => b.classList.remove('active'));
-        // Add active to clicked
         btn.classList.add('active');
-        // Render
         renderProjects(btn.dataset.filter);
     });
 });
 
-// --- 3. Modal Logic ---
+// --- 3. Modal Logic (For Dummy Projects) ---
 const modal = document.getElementById('projectModal');
 const modalBody = document.getElementById('modal-body-content');
 const closeModal = document.querySelector('.close-modal');
@@ -129,9 +122,11 @@ function openModal(id) {
     modal.style.display = 'flex';
 }
 
-closeModal.addEventListener('click', () => {
-    modal.style.display = 'none';
-});
+if(closeModal) {
+    closeModal.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+}
 
 window.addEventListener('click', (e) => {
     if (e.target == modal) modal.style.display = 'none';
@@ -140,27 +135,29 @@ window.addEventListener('click', (e) => {
 // --- 4. Firebase Form Submission ---
 const contactForm = document.getElementById('contactForm');
 
-contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
+if(contactForm) {
+    contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
 
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const service = document.getElementById('service').value;
-    const message = document.getElementById('message').value;
-    const submitBtn = contactForm.querySelector('button');
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const service = document.getElementById('service').value;
+        const message = document.getElementById('message').value;
+        const submitBtn = contactForm.querySelector('button');
 
-    const originalText = submitBtn.innerText;
-    submitBtn.innerText = 'Sending...';
+        const originalText = submitBtn.innerText;
+        submitBtn.innerText = 'Sending...';
 
-    saveMessageToFirebase({ name, email, service, message })
-        .then(() => {
-            alert('Message Sent Successfully!');
-            contactForm.reset();
-            submitBtn.innerText = originalText;
-        })
-        .catch((error) => {
-            console.error(error);
-            alert('Error sending message. Check console.');
-            submitBtn.innerText = originalText;
-        });
-});
+        saveMessageToFirebase({ name, email, service, message })
+            .then(() => {
+                alert('Message Sent Successfully! We will contact you at ' + email);
+                contactForm.reset();
+                submitBtn.innerText = originalText;
+            })
+            .catch((error) => {
+                console.error(error);
+                alert('Error sending message. Check console.');
+                submitBtn.innerText = originalText;
+            });
+    });
+}

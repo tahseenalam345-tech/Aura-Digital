@@ -6,9 +6,8 @@ const projects = [
         id: 1,
         title: "Pharma Inventory System",
         category: "web",
-        type: "real", // This is your REAL project
+        mode: "live", // <--- This triggers the Live Iframe
         url: "https://pharma-inventory-theta.vercel.app/", 
-        image: "https://placehold.co/600x400/103a2e/FFF?text=Pharma+System", // You can replace this with a screenshot later
         client: "Local Pharmacy",
         stack: "React, Firebase",
         description: "A complete inventory management solution for pharmacies to track medicine stock, sales, and expiry dates."
@@ -17,7 +16,7 @@ const projects = [
         id: 2,
         title: "FinTrack Mobile Banking",
         category: "app",
-        type: "dummy",
+        mode: "static",
         image: "https://placehold.co/600x400/1a1a2e/FFF?text=FinTrack",
         client: "FinTech Corp",
         stack: "Flutter, Firebase, Node.js",
@@ -27,7 +26,7 @@ const projects = [
         id: 3,
         title: "Urban Eat Delivery",
         category: "web",
-        type: "dummy",
+        mode: "static",
         image: "https://placehold.co/600x400/1a1a2e/FFF?text=Urban+Eat",
         client: "Urban Eat Ltd",
         stack: "Next.js, Tailwind CSS",
@@ -37,7 +36,7 @@ const projects = [
         id: 4,
         title: "Neon Analytics",
         category: "web",
-        type: "dummy",
+        mode: "static",
         image: "https://placehold.co/600x400/1a1a2e/FFF?text=Neon+Analytics",
         client: "DataView Inc",
         stack: "React, D3.js",
@@ -59,18 +58,34 @@ function renderProjects(filter = 'all') {
         const card = document.createElement('div');
         card.className = 'project-card';
         
-        // Logic: If real, link to website. If dummy, open modal.
+        // --- LOGIC: Live Frame vs Static Image ---
+        let visualHtml = '';
         let buttonHtml = '';
-        if(project.type === 'real') {
-            buttonHtml = `<a href="${project.url}" target="_blank" class="btn btn-primary btn-sm">Visit Website</a>`;
+
+        if(project.mode === 'live') {
+            // Live Iframe View
+            visualHtml = `
+                <div class="live-preview-wrapper">
+                    <iframe src="${project.url}" class="project-frame" loading="lazy"></iframe>
+                </div>
+            `;
+            buttonHtml = `<a href="${project.url}" target="_blank" class="btn btn-primary btn-sm">Visit Live Site</a>`;
         } else {
-            buttonHtml = `<button class="btn btn-outline btn-sm view-details" data-id="${project.id}">View Details</button>`;
+            // Static Image View
+            visualHtml = ``; // Image is handled by CSS background in the parent, but we override here:
+            card.style.overflow = "hidden"; // Ensure frame stays inside
         }
 
+        // Base Card HTML
+        // Note: For static images, we use inline style. For live, we use the visualHtml wrapper.
+        const imgStyle = project.mode === 'static' ? `background-image: url('${project.image}');` : '';
+        const btnAction = project.mode === 'static' ? `<button class="btn btn-outline btn-sm view-details" data-id="${project.id}">View Details</button>` : buttonHtml;
+
         card.innerHTML = `
-            <div class="project-img" style="background-image: url('${project.image}');">
+            <div class="project-img" style="${imgStyle}">
+                ${visualHtml}
                 <div class="overlay">
-                    ${buttonHtml}
+                    ${btnAction}
                 </div>
             </div>
             <div class="project-info">
@@ -81,7 +96,7 @@ function renderProjects(filter = 'all') {
         portfolioGrid.appendChild(card);
     });
 
-    // Re-attach listeners ONLY to "View Details" buttons (Dummy projects)
+    // Re-attach listeners for modal (only for dummy/static projects)
     document.querySelectorAll('.view-details').forEach(btn => {
         btn.addEventListener('click', (e) => openModal(e.target.dataset.id));
     });
@@ -101,7 +116,7 @@ filterBtns.forEach(btn => {
     });
 });
 
-// --- 3. Modal Logic (For Dummy Projects) ---
+// --- 3. Modal Logic ---
 const modal = document.getElementById('projectModal');
 const modalBody = document.getElementById('modal-body-content');
 const closeModal = document.querySelector('.close-modal');

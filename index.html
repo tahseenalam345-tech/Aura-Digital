@@ -1,1 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuraDigital | Digital Agency</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
 
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <i class="fa-solid fa-infinity"></i> AuraDigital
+            </a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#work">Work</a></li>
+                <li><a href="#process">Process</a></li>
+            </ul>
+            <a href="#contact" class="btn btn-primary">Get Started</a>
+            <div class="hamburger">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <header id="home" class="hero">
+        <div class="container hero-content">
+            <div class="badge">
+                <span class="dot"></span> Accepting New Projects for 2026
+            </div>
+            <h1>We Build Digital <span class="text-gradient">Experiences That Matter</span></h1>
+            <p>A comprehensive digital agency specializing in high-performance websites, cutting-edge mobile apps, and data-driven marketing strategies to grow your business.</p>
+            <div class="hero-btns">
+                <a href="#work" class="btn btn-primary">View Our Work</a>
+                <a href="#services" class="btn btn-outline">Explore Services</a>
+            </div>
+            
+            <div class="stats-row">
+                <div class="stat-item">
+                    <h3>150+</h3>
+                    <p>Projects Completed</p>
+                </div>
+                <div class="stat-item">
+                    <h3>98%</h3>
+                    <p>Client Satisfaction</p>
+                </div>
+                <div class="stat-item">
+                    <h3>5+</h3>
+                    <p>Years Experience</p>
+                </div>
+                <div class="stat-item">
+                    <h3>24/7</h3>
+                    <p>Support Active</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="services" class="section">
+        <div class="container">
+            <div class="section-header">
+                <span class="subtitle">WHAT WE DO</span>
+                <h2>Full-Cycle Digital Solutions</h2>
+                <p>From the first line of code to the final marketing campaign, we handle every aspect of your digital presence.</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="icon-box"><i class="fa-solid fa-code"></i></div>
+                    <h3>Web Development</h3>
+                    <p>Custom websites built with modern technologies like React, Next.js, and Tailwind CSS. We ensure speed and SEO-friendly structures.</p>
+                    <ul>
+                        <li><i class="fa-solid fa-circle-check"></i> Corporate Websites</li>
+                        <li><i class="fa-solid fa-circle-check"></i> E-Commerce Solutions</li>
+                        <li><i class="fa-solid fa-circle-check"></i> SaaS Platforms</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <div class="icon-box"><i class="fa-solid fa-mobile-screen"></i></div>
+                    <h3>App Development</h3>
+                    <p>Native and cross-platform mobile applications for iOS and Android. We build intuitive apps that users love to engage with daily.</p>
+                    <ul>
+                        <li><i class="fa-solid fa-circle-check"></i> iOS & Android</li>
+                        <li><i class="fa-solid fa-circle-check"></i> React Native / Flutter</li>
+                        <li><i class="fa-solid fa-circle-check"></i> UI/UX Design</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <div class="icon-box"><i class="fa-solid fa-chart-line"></i></div>
+                    <h3>Digital Marketing</h3>
+                    <p>Data-driven strategies to increase your visibility. From SEO to Social Media Marketing, we help you reach your target audience effectively.</p>
+                    <ul>
+                        <li><i class="fa-solid fa-circle-check"></i> SEO Optimization</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Social Media Ads</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Content Strategy</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="work" class="section bg-darker">
+        <div class="container">
+            <div class="section-header-row">
+                <div>
+                    <span class="subtitle">OUR PORTFOLIO</span>
+                    <h2>Recent Projects</h2>
+                </div>
+                <div class="filter-btns">
+                    <button class="filter-btn active" data-filter="all">All Work</button>
+                    <button class="filter-btn" data-filter="web">Web Dev</button>
+                    <button class="filter-btn" data-filter="app">Mobile Apps</button>
+                    <button class="filter-btn" data-filter="marketing">Marketing</button>
+                </div>
+            </div>
+
+            <div class="portfolio-grid" id="portfolio-grid">
+                </div>
+        </div>
+    </section>
+
+    <section id="process" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>How We Work</h2>
+            </div>
+            <div class="process-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Discovery</h3>
+                    <p>We meet to understand your goals, target audience, and requirements.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Design</h3>
+                    <p>We create wireframes and high-fidelity mockups for your approval.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Develop</h3>
+                    <p>Our developers bring the designs to life using clean, efficient code.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Launch</h3>
+                    <p>We deploy your project, test thoroughly, and provide support.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section bg-darker">
+        <div class="container contact-container">
+            <div class="contact-text">
+                <h2>Ready to Start Your Project?</h2>
+                <p>Tell us about your idea and we'll help you bring it to reality.</p>
+            </div>
+            <form id="contactForm" class="contact-form">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="john@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="service">Service Interest</label>
+                    <select id="service">
+                        <option value="Web Development">Web Development</option>
+                        <option value="Mobile Apps">Mobile Apps</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" rows="4" placeholder="Tell us a bit about your project..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <a href="#" class="logo">
+                    <i class="fa-solid fa-infinity"></i> AuraDigital
+                </a>
+                <p>Empowering businesses with innovative digital solutions. We code, design, and market your path to success.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Services</h4>
+                <ul>
+                    <li>Web Development</li>
+                    <li>Mobile Apps</li>
+                    <li>SEO & Marketing</li>
+                    <li>UI/UX Design</li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Contact</h4>
+                <ul>
+                    <li><i class="fa-solid fa-envelope"></i> hello@auradigital.com</li>
+                    <li><i class="fa-solid fa-phone"></i> +1 (555) 123-4567</li>
+                    <li><i class="fa-solid fa-location-dot"></i> Tech Plaza, New York</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Aura Digital Agency. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <div id="projectModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-body" id="modal-body-content">
+                </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/firebase-config.js"></script>
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

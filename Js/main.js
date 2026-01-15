@@ -1,13 +1,27 @@
 import { saveMessageToFirebase } from './firebase-config.js';
 
 // --- Data: Portfolio Projects ---
+// --- Data: Portfolio Projects ---
 const projects = [
+    {
+        id: 5, // New Project ID
+        title: "Aura Taste",
+        category: "web",
+        mode: "live",
+        url: "https://aura-taste.vercel.app/",
+        // I used a reddish color for the placeholder to match a 'food' theme
+        image: "https://placehold.co/600x400/e63946/FFF?text=Aura+Taste", 
+        client: "Aura Taste",
+        stack: "React, Tailwind CSS",
+        description: "A modern food discovery platform featuring a delicious menu and seamless ordering experience."
+    },
     {
         id: 1,
         title: "Pharma Inventory System",
         category: "web",
-        mode: "live", // <--- This triggers the Live Iframe
+        mode: "live",
         url: "https://pharma-inventory-theta.vercel.app/", 
+        image: "https://placehold.co/600x400/103a2e/FFF?text=Pharma+System",
         client: "Local Pharmacy",
         stack: "React, Firebase",
         description: "A complete inventory management solution for pharmacies to track medicine stock, sales, and expiry dates."
@@ -43,7 +57,6 @@ const projects = [
         description: "Marketing analytics dashboard for SaaS companies."
     }
 ];
-
 // --- 1. Render Portfolio ---
 const portfolioGrid = document.getElementById('portfolio-grid');
 

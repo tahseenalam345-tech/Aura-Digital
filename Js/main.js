@@ -1,16 +1,23 @@
-import { saveMessageToFirebase } from './firebase-config.js';
-
-// --- Data: Portfolio Projects ---
 // --- Data: Portfolio Projects ---
 const projects = [
     {
-        id: 5, // New Project ID
+        id: 6, // New Project
+        title: "Aura Dept",
+        category: "web",
+        mode: "live",
+        url: "https://aura-dept.vercel.app/",
+        image: "https://placehold.co/600x400/264653/FFF?text=Aura+Dept", // Corporate/Teal theme
+        client: "Aura Department",
+        stack: "React, Tailwind CSS",
+        description: "A streamlined departmental management platform designed to optimize workflow and team coordination."
+    },
+    {
+        id: 5,
         title: "Aura Taste",
         category: "web",
         mode: "live",
         url: "https://aura-taste.vercel.app/",
-        // I used a reddish color for the placeholder to match a 'food' theme
-        image: "https://placehold.co/600x400/e63946/FFF?text=Aura+Taste", 
+        image: "https://placehold.co/600x400/e63946/FFF?text=Aura+Taste",
         client: "Aura Taste",
         stack: "React, Tailwind CSS",
         description: "A modern food discovery platform featuring a delicious menu and seamless ordering experience."
@@ -57,135 +64,3 @@ const projects = [
         description: "Marketing analytics dashboard for SaaS companies."
     }
 ];
-// --- 1. Render Portfolio ---
-const portfolioGrid = document.getElementById('portfolio-grid');
-
-function renderProjects(filter = 'all') {
-    portfolioGrid.innerHTML = '';
-    
-    const filtered = filter === 'all' 
-        ? projects 
-        : projects.filter(p => p.category === filter);
-
-    filtered.forEach(project => {
-        const card = document.createElement('div');
-        card.className = 'project-card';
-        
-        // --- LOGIC: Live Frame vs Static Image ---
-        let visualHtml = '';
-        let buttonHtml = '';
-
-        if(project.mode === 'live') {
-            // Live Iframe View
-            visualHtml = `
-                <div class="live-preview-wrapper">
-                    <iframe src="${project.url}" class="project-frame" loading="lazy"></iframe>
-                </div>
-            `;
-            buttonHtml = `<a href="${project.url}" target="_blank" class="btn btn-primary btn-sm">Visit Live Site</a>`;
-        } else {
-            // Static Image View
-            visualHtml = ``; // Image is handled by CSS background in the parent, but we override here:
-            card.style.overflow = "hidden"; // Ensure frame stays inside
-        }
-
-        // Base Card HTML
-        // Note: For static images, we use inline style. For live, we use the visualHtml wrapper.
-        const imgStyle = project.mode === 'static' ? `background-image: url('${project.image}');` : '';
-        const btnAction = project.mode === 'static' ? `<button class="btn btn-outline btn-sm view-details" data-id="${project.id}">View Details</button>` : buttonHtml;
-
-        card.innerHTML = `
-            <div class="project-img" style="${imgStyle}">
-                ${visualHtml}
-                <div class="overlay">
-                    ${btnAction}
-                </div>
-            </div>
-            <div class="project-info">
-                <h4>${project.title}</h4>
-                <p>${project.category.toUpperCase()}</p>
-            </div>
-        `;
-        portfolioGrid.appendChild(card);
-    });
-
-    // Re-attach listeners for modal (only for dummy/static projects)
-    document.querySelectorAll('.view-details').forEach(btn => {
-        btn.addEventListener('click', (e) => openModal(e.target.dataset.id));
-    });
-}
-
-// Initial Render
-renderProjects();
-
-// --- 2. Filter Logic ---
-const filterBtns = document.querySelectorAll('.filter-btn');
-
-filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        renderProjects(btn.dataset.filter);
-    });
-});
-
-// --- 3. Modal Logic ---
-const modal = document.getElementById('projectModal');
-const modalBody = document.getElementById('modal-body-content');
-const closeModal = document.querySelector('.close-modal');
-
-function openModal(id) {
-    const project = projects.find(p => p.id == id);
-    if (!project) return;
-
-    modalBody.innerHTML = `
-        <img src="${project.image}" style="width:100%; border-radius:8px; margin-bottom:20px;">
-        <h2>${project.title}</h2>
-        <p style="color:#6C63FF; margin-bottom:10px;"><strong>Client:</strong> ${project.client}</p>
-        <p style="margin-bottom:15px;">${project.description}</p>
-        <div style="background:rgba(255,255,255,0.05); padding:10px; border-radius:8px;">
-            <small><strong>Tech Stack:</strong> ${project.stack}</small>
-        </div>
-    `;
-    modal.style.display = 'flex';
-}
-
-if(closeModal) {
-    closeModal.addEventListener('click', () => {
-        modal.style.display = 'none';
-    });
-}
-
-window.addEventListener('click', (e) => {
-    if (e.target == modal) modal.style.display = 'none';
-});
-
-// --- 4. Firebase Form Submission ---
-const contactForm = document.getElementById('contactForm');
-
-if(contactForm) {
-    contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const service = document.getElementById('service').value;
-        const message = document.getElementById('message').value;
-        const submitBtn = contactForm.querySelector('button');
-
-        const originalText = submitBtn.innerText;
-        submitBtn.innerText = 'Sending...';
-
-        saveMessageToFirebase({ name, email, service, message })
-            .then(() => {
-                alert('Message Sent Successfully! We will contact you at ' + email);
-                contactForm.reset();
-                submitBtn.innerText = originalText;
-            })
-            .catch((error) => {
-                console.error(error);
-                alert('Error sending message. Check console.');
-                submitBtn.innerText = originalText;
-            });
-    });
-}
